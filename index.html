@@ -220,7 +220,6 @@
             height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            object-position: center 50%;
             border: 3px solid var(--primary);
             box-shadow: 
                 0 0 30px rgba(0,240,255,0.4),
@@ -1203,6 +1202,152 @@
             80% { transform: skew(1deg); }
             100% { transform: skew(0deg); }
         }
+
+        /* ===== RESPONSIVE FIX ONLY - DO NOT TOUCH DESIGN ===== */
+.hero-content {
+    width: 100%;
+    max-width: 1000px;
+    padding-top: 5rem;
+    padding-bottom: 3rem;
+}
+
+.hero-profile {
+    width: clamp(150px, 22vw, 180px);
+    height: clamp(150px, 22vw, 180px);
+    margin: 1.8rem auto 2rem;
+}
+
+.hero .name-ar {
+    margin-top: 0;
+}
+
+.hero .name-en {
+    word-break: keep-all;
+}
+
+@media (max-width: 1024px) {
+    .hero {
+        padding: 7rem 1.5rem 3rem;
+        min-height: auto;
+    }
+
+    .hero-content {
+        padding-top: 2rem;
+    }
+
+    .hero-stats {
+        gap: 1rem;
+    }
+
+    .stat-item {
+        min-width: 130px;
+        padding: 1.2rem 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    nav {
+        padding: 0.9rem 1.2rem;
+    }
+
+    .logo-3d,
+    .logo-3d::before {
+        font-size: 1.4rem;
+    }
+
+    .hero {
+        padding: 6rem 1rem 2.5rem;
+        align-items: flex-start;
+    }
+
+    .hero-profile {
+        width: 145px;
+        height: 145px;
+        margin: 1.4rem auto 1.8rem;
+    }
+
+    .hero-profile::before {
+        top: -8px;
+        left: -8px;
+        right: -8px;
+        bottom: -8px;
+    }
+
+    .hero-profile::after {
+        top: -15px;
+        left: -15px;
+        right: -15px;
+        bottom: -15px;
+    }
+
+    .hero .name-ar {
+        font-size: 2rem;
+    }
+
+    .hero .name-en {
+        font-size: 0.78rem;
+        letter-spacing: 3px;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+
+    .hero-stats {
+        display: grid;
+        grid-template-columns: 1fr;
+        width: 100%;
+        max-width: 320px;
+        margin: 0 auto 2rem;
+    }
+
+    .stat-item {
+        width: 100%;
+    }
+
+    .hero-btns {
+        width: 100%;
+    }
+
+    .hero-btns .btn {
+        width: 100%;
+        justify-content: center;
+        max-width: 320px;
+    }
+
+    section {
+        padding: 4rem 1rem;
+    }
+
+    .about-details {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-form {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 420px) {
+    .hero-profile {
+        width: 130px;
+        height: 130px;
+    }
+
+    .hero .name-ar {
+        font-size: 1.8rem;
+    }
+
+    .hero .name-en {
+        font-size: 0.68rem;
+        letter-spacing: 2px;
+    }
+
+    .btn {
+        padding: 0.9rem 1.5rem;
+    }
+}
     </style>
 </head>
 <body>
@@ -1238,20 +1383,26 @@
 </nav>
 
 <!-- Hero Section -->
+<!-- Hero Section -->
 <section class="hero" id="home">
     <div class="hero-content">
-        <!-- 3D Profile Image -->
-        <div class="hero-profile">
-            <img src="layth.png" alt="ليث الكبيسي" class="about-image">
-        </div>
-
-        <div class="hero-badge">
-            <i class="fas fa-circle" style="font-size:8px"></i>
-            متاح للعمل
-        </div>
 
         <div class="name-ar">ليث الكبيسي</div>
         <div class="name-en">LAYTH AL-KUBAISI</div>
+
+        <!-- 3D Profile Image -->
+        
+<!-- 3D Profile Image -->
+<div class="hero-profile">
+    <img src="layth.png" alt="ليث الكبيسي">
+</div>
+
+<div class="hero-badge">
+    <i class="fas fa-circle" style="font-size:8px"></i>
+    متاح للعمل
+</div>
+
+       
 
         <h1 class="glitch">مطور تطبيقات متخصص</h1>
 
@@ -1300,7 +1451,7 @@
         <div class="about-info fade-up delay-2">
             <h3>ليث الكبيسي</h3>
             <p>
-                مطور تطبيقات متخصص من العراق درس في ألمانيا، أحمل شهادة البكالوريوس في علوم الحاسوب من جامعة المعارف، 
+                مطور تطبيقات متخصص من العراق مقيم في ألمانيا، أحمل شهادة البكالوريوس في علوم الحاسوب من جامعة المعارف، 
                 وشهادة متخصص في تطوير التطبيقات من كلية CBW المهنية بهامبورغ. أمتلك خبرة عملية في مجال التحليل البيولوجي 
                 والخدمات اللوجستية، بالإضافة إلى خبرة تدريسية في علوم الحاسوب.
             </p>
@@ -2141,8 +2292,25 @@ initTTT();
 // ===== CONTACT FORM =====
 function handleSubmit(e) {
     e.preventDefault();
-    alert('شكراً لتواصلك! سأرد عليك في أقرب وقت.');
-    e.target.reset();
+
+    const form = e.target;
+    const name = form.querySelector('input[type="text"]').value.trim();
+    const email = form.querySelector('input[type="email"]').value.trim();
+    const subject = form.querySelectorAll('input[type="text"]')[1].value.trim();
+    const message = form.querySelector('textarea').value.trim();
+
+    const whatsappNumber = "9647865566303";
+
+    const text =
+        `السلام عليكم، أنا ${name}\n` +
+        `البريد: ${email}\n` +
+        `الموضوع: ${subject}\n` +
+        `الرسالة: ${message}`;
+
+    const whatsappUrl =
+        `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
+
+    window.open(whatsappUrl, "_blank");
 }
 
 // ===== SMOOTH SCROLL =====
